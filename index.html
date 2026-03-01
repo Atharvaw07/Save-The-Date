@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title id="pageTitle">Wedding Invitation</title>
+    <!-- Favicon -->
+    <link id="favicon" rel="icon" type="image/svg+xml" href="">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Audio Player -->
+    <audio id="bgMusic" loop>
+        <source id="audioSource" src="" type="audio/mpeg">
+    </audio>
+
+    <button id="audioToggle" class="audio-btn" aria-label="Toggle Audio">
+        <svg id="audioIcon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor"
+                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+        </svg>
+    </button>
+
+
+    <!-- Section 1: Theater Curtain Video Reveal -->
+    <section id="theaterSection" class="theater-section">
+        <div class="video-container">
+            <video id="curtainVideo" playsinline muted preload="auto">
+                <source id="videoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Interaction Overlay -->
+            <div id="videoOverlay" class="curtain-content">
+                <div class="tap-to-open">
+                    <span class="pulse-icon">👆</span>
+                    <p>TAP TO OPEN</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Couple Reveal & Scratch-off -->
+    <section id="revealSection" class="reveal-section">
+        <div class="reveal-inner">
+            <p class="invite-text">YOU ARE CORDIALLY INVITED TO CELEBRATE THE WEDDING OF</p>
+            <h1 id="coupleNamesDisplay" class="couple-names">Loading...</h1>
+
+            <div class="scratch-container">
+                <p class="scratch-instruction">Scratch to discover the date</p>
+
+                <div class="hearts-row">
+                    <!-- Day Heart -->
+                    <div class="heart-item">
+                        <div class="heart-container" id="heartContainer1">
+                            <div class="hidden-content">
+                                <span class="label">DAY</span>
+                                <span id="weddingDay" class="value">--</span>
+                            </div>
+                            <canvas id="scratchCanvas1" class="scratch-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Month Heart -->
+                    <div class="heart-item">
+                        <div class="heart-container" id="heartContainer2">
+                            <div class="hidden-content">
+                                <span class="label">MONTH</span>
+                                <span id="weddingMonth" class="value">--</span>
+                            </div>
+                            <canvas id="scratchCanvas2" class="scratch-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Year Heart -->
+                    <div class="heart-item">
+                        <div class="heart-container" id="heartContainer3">
+                            <div class="hidden-content">
+                                <span class="label">YEAR</span>
+                                <span id="weddingYear" class="value">--</span>
+                            </div>
+                            <canvas id="scratchCanvas3" class="scratch-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calendar-btn-container" id="calendarBtnContainer">
+                <a id="calendarLink" href="#" target="_blank" class="btn">
+                    Add to Calendar
+                </a>
+            </div>
+
+            <div class="footer-note">
+                <p>WE WOULD LIKE TO INVITE YOU TO CELEBRATE WITH US THE MOST SPECIAL DAY OF OUR LIVES.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

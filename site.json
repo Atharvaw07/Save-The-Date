@@ -1,0 +1,18 @@
+{
+    "pageTitle": "P & P - Wedding Invitation",
+    "audioSrc": "https://pub-1953a6673e864f3488c645252f75de98.r2.dev/common-assets/ishq-hai-official-music-video-mismatched-season-3-a-netflix-series_5tXt3KoB.mp3",
+    "videoSrc": "https://pub-1953a6673e864f3488c645252f75de98.r2.dev/common-assets/Video.mp4",
+    "coupleNames": "Prachi & Prakash",
+    "weddingDate": {
+        "day": "01",
+        "month": "05",
+        "year": "26"
+    },
+    "calendar": {
+        "text": "Wedding of Prachi & Prakash",
+        "dates": "20260501/20260502",
+        "details": "We cordially invite you to celebrate our special day!",
+        "location": "To be announced"
+    },
+    "favicon": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>"
+}
