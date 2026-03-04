@@ -4,33 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title id="pageTitle">Wedding Invitation</title>
-    <!-- Favicon -->
+    <title id="pageTitle">Save The Date</title>
     <link id="favicon" rel="icon" type="image/svg+xml" href="">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
-    <!-- Confetti Library -->
+    <!-- Million-Dollar Typography Selection -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <style>
 :root {
-    --curtain-color: #b11226;
-    --gold: #caa46a;
-    --bg-light: #ffffff;
-    --text-dark: #2b1410;
-    --text-muted: #7b7b7b;
-    --accent: #c9828a; /* Soft dusty rose from Untitled-1 light variant */
+    /* Luxurious Color Palette */
+    --gold: #d4af37;
+    --gold-dark: #aa771c;
+    --bg-light: #fdfaf6; /* Very soft cream matching reference */
+    --text-dark: #332725;
+    --text-muted: #8b736d;
+    --accent: #c9828a; /* Soft dusty rose */
     --accent-dark: #a86a71;
-    --border-color: #e1d7cd;
-    --hidden-bg: #f7f3ef;
-    --font-serif: 'Bodoni Moda', serif;
-    --font-sans: 'Lato', sans-serif;
-    --font-accent: 'Playfair Display', serif;
+    --border-color: #e8ded5;
+    
+    /* Font Variables */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Montserrat', sans-serif;
+    --font-script: 'Great Vibes', cursive;
 }
 
 * {
@@ -40,83 +37,77 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-html {
-    scroll-behavior: smooth;
+html, body {
+    height: 100%;
+    width: 100%;
 }
 
 body {
-    background-color: var(--bg-light);
+    background: var(--bg-light);
     font-family: var(--font-sans);
     color: var(--text-dark);
-    overflow: hidden; /* Lock scroll for entry */
+    overflow: hidden; /* Lock scroll on body */
 }
 
-body.content-ready {
-    overflow-y: auto; /* Unlock website */
+/* --- Smooth Scroll Snapping Container --- */
+.content-container {
+    height: 100vh;
+    width: 100vw;
+    overflow-y: hidden; /* Locked initially until video finishes */
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    display: block; 
+}
+
+body.content-ready .content-container {
+    overflow-y: auto; /* Unlocks scrolling globally */
+}
+
+.screen {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+/* Fix for Video Border - Overrides .screen padding */
+.theater-section.screen {
+    padding: 0;
 }
 
 /* --- Audio Button --- */
 .audio-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid var(--gold);
-    color: var(--curtain-color);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    color: var(--accent-dark);
     cursor: pointer;
     z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .audio-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) translateY(-2px);
     background: white;
-}
-
-/* --- BUTTON --- */
-.calendar-btn-container {
-    margin-top: 30px;
-    height: 50px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 1s ease;
-    pointer-events: none;
-}
-
-.calendar-btn-container.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
-}
-
-.btn {
-    background-color: transparent;
-    color: var(--accent);
-    padding: 12px 25px;
-    border: 1px solid var(--accent);
-    border-radius: 4px;
-    font-family: var(--font-main);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    background-color: var(--accent);
-    color: #fff;
-    box-shadow: 0 5px 15px rgba(177, 18, 38, 0.3);
+    color: var(--gold-dark);
+    border-color: var(--gold);
+    box-shadow: 0 12px 25px rgba(212, 175, 55, 0.2);
 }
 
 /* --- Theater Section (Video) --- */
@@ -126,6 +117,7 @@ body.content-ready {
     height: 100vh;
     overflow: hidden;
     background: #000;
+    z-index: 100;
 }
 
 .video-container {
@@ -149,7 +141,7 @@ body.content-ready {
     text-align: center;
     color: white;
     cursor: pointer;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.8s ease;
 }
 
 .theater-section.playing .curtain-content {
@@ -157,101 +149,256 @@ body.content-ready {
     pointer-events: none;
 }
 
+/* --- Aesthetic Tap to Continue UI --- */
 .tap-to-open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tap-circle {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    background: transparent;
+}
+
+.tap-circle::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    animation: pulse-ring 2.5s infinite ease-out;
+}
+
+.tap-icon {
+    width: 28px;
+    height: 28px;
+    stroke: white;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.tap-text {
     font-family: var(--font-serif);
-    letter-spacing: 4px;
+    font-size: 1.15rem;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.95);
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-.pulse-icon {
-    font-size: 3rem;
-    display: block;
-    margin-bottom: 10px;
-    animation: pulse 2s infinite;
+@keyframes pulse-ring {
+    0% { transform: scale(0.9); opacity: 1; }
+    100% { transform: scale(1.3); opacity: 0; }
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-
-/* --- Reveal Section --- */
-.reveal-section {
-    min-height: 90vh;
-    padding: 60px 20px;
-    display: none; /* Hidden until entry is finished */
-    justify-content: center;
-    align-items: center;
-    background: var(--bg-light);
-    text-align: center;
-    opacity: 0;
-    transition: opacity 1.5s ease;
-}
-
-body.content-ready .reveal-section {
+/* --- Persistent Global Scroll Indicator --- */
+#globalScrollPrompt {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
     display: flex;
-    opacity: 1;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    animation: bounce 2s infinite;
 }
 
-.reveal-inner {
-    max-width: 600px;
-    width: 100%;
+#globalScrollPrompt.visible {
+    opacity: 0.7;
+    visibility: visible;
+}
+
+#globalScrollPrompt p {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    color: var(--text-muted);
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+#globalScrollPrompt svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--text-muted);
+    transition: stroke 0.5s ease, filter 0.5s ease;
+}
+
+/* Light text mode for when overlaying the dark video */
+#globalScrollPrompt.light-text p {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+#globalScrollPrompt.light-text svg {
+    stroke: white;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+    40% { transform: translateY(-10px) translateX(-50%); }
+    60% { transform: translateY(-5px) translateX(-50%); }
+}
+
+/* --- Elegant Animations --- */
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none; /* Prevents hidden elements from blocking clicks */
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; /* Restores clickability when revealed */
+}
+
+.delay-1 { transition-delay: 0.15s; }
+.delay-2 { transition-delay: 0.3s; }
+.delay-3 { transition-delay: 0.45s; }
+
+
+/* --- Typography Styling based on sketch & new image --- */
+.monogram {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--gold-dark);
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+}
+
+.monogram .amp {
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--accent);
 }
 
 .invite-text {
     font-family: var(--font-sans);
-    font-size: 0.65rem;
-    letter-spacing: 2px;
+    font-size: 0.85rem;
+    line-height: 2;
+    letter-spacing: 3px;
     color: var(--text-muted);
-    margin-bottom: 15px;
     text-transform: uppercase;
+    margin-bottom: 35px;
+    font-weight: 400;
 }
 
 .couple-names {
-    font-family: var(--font-accent);
-    font-size: 2.8rem;
+    font-family: var(--font-serif);
+    font-size: 4rem;
     line-height: 1.2;
-    margin-bottom: 40px;
     color: var(--text-dark);
+    font-weight: 600;
 }
 
 .couple-names .ampersand {
-    font-family: var(--font-serif);
-    font-style: italic;
+    font-family: var(--font-script);
+    font-size: 4rem;
     color: var(--gold);
+    display: inline-block;
+    transform: translateY(5px);
+    margin: 0 15px;
+    font-weight: 400;
 }
 
-/* --- Scratch Hearts (Mobile-First) --- */
-.scratch-container {
-    margin: 30px 0;
+/* --- Scratch Area Header --- */
+.we-get-wed {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    transition: opacity 0.5s ease;
 }
 
 .scratch-instruction {
+    display: block;
     font-family: var(--font-serif);
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     font-style: italic;
     color: var(--text-muted);
-    margin-bottom: 25px;
+    margin-bottom: 40px;
+    transition: opacity 0.5s ease;
+}
+
+/* Hide instructions gently when scratched */
+.scratch-container.unlocked .scratch-instruction {
+    opacity: 0;
+}
+
+/* --- Scratch Hearts (Forced Single Row) --- */
+.scratch-container {
+    width: 100%;
 }
 
 .hearts-row {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 15px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .heart-container {
     position: relative;
-    width: 130px; /* Reduced for mobile-first */
-    height: 115px; /* Proportional to 260x230 */
-    margin: 0 auto;
-    clip-path: path("M65 109 C65 109, 130 74, 130 41.5 C130 13.5, 102 -5, 79 9 C65 18.5, 65 18.5, 65 18.5 C65 18.5, 65 18.5, 51 9 C28 -5, 0 13.5, 0 41.5 C0 74, 65 109, 65 109 Z");
-    background: var(--hidden-bg);
+    width: 28vw; 
+    max-width: 140px;
+    aspect-ratio: 1.1 / 1; 
+    margin: 0;
+    
+    /* Advanced SVG Masking */
+    mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 185' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 185 C100 185, 200 125, 200 70 C200 23, 157 -10, 121.5 15 C100 31, 100 31, 100 31 C100 31, 100 31, 78.5 15 C43 -10, 0 23, 0 70 C0 125, 100 185, 100 185 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 185' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 185 C100 185, 200 125, 200 70 C200 23, 157 -10, 121.5 15 C100 31, 100 31, 100 31 C100 31, 100 31, 78.5 15 C43 -10, 0 23, 0 70 C0 125, 100 185, 100 185 Z' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    
+    background: #ffffff; /* Pure white hearts against cream background */
     cursor: crosshair;
     touch-action: none;
+    transition: transform 0.5s ease;
+}
+
+/* Beautiful gentle pulse animation on the revealed hearts */
+.hearts-row.unlocked .heart-container {
+    animation: gentle-heart-beat 3s infinite ease-in-out;
+}
+.hearts-row.unlocked .heart-container:nth-child(2) { animation-delay: 0.3s; }
+.hearts-row.unlocked .heart-container:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes gentle-heart-beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
 }
 
 .hidden-content {
@@ -264,21 +411,24 @@ body.content-ready .reveal-section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: var(--hidden-bg);
+    background: transparent;
     z-index: 1;
 }
 
 .hidden-content .label {
-    font-size: 0.5rem;
-    letter-spacing: 1px;
+    font-size: 0.55rem;
+    letter-spacing: 3px;
     color: var(--text-muted);
     text-transform: uppercase;
+    margin-bottom: 5px;
+    margin-top: -15px; 
 }
 
 .hidden-content .value {
     font-family: var(--font-serif);
-    font-size: 1.8rem;
-    color: var(--text-dark);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold-dark);
 }
 
 .scratch-canvas {
@@ -288,422 +438,530 @@ body.content-ready .reveal-section {
     z-index: 2;
     width: 100%;
     height: 100%;
-    transition: opacity 0.8s ease;
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.footer-note {
-    margin-top: 40px;
+/* --- THE SURPRISE ELEMENT --- */
+.surprise-message {
+    font-family: var(--font-script);
+    font-size: 2.8rem;
+    color: var(--accent-dark);
+    margin-top: 35px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+    position: absolute; /* positioned nicely below hearts without shifting layout */
+    left: 0;
+    right: 0;
+    text-shadow: 0 4px 15px rgba(201, 130, 138, 0.15); /* Soft accent glow */
+}
+
+.surprise-message.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- Bottom Section based on sketch --- */
+.bottom-message {
+    width: 100%;
+}
+
+.bottom-message p {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     line-height: 1.6;
-    letter-spacing: 1px;
+    letter-spacing: 3px;
     color: var(--text-muted);
     text-transform: uppercase;
+    margin-bottom: 40px;
 }
 
+.with-love {
+    font-family: var(--font-script);
+    font-size: 3.5rem;
+    color: var(--accent-dark);
+    margin-bottom: 5px;
+}
+
+.sign-off-names {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+/* --- BUTTON --- */
+.calendar-btn-container {
+    margin-top: 50px;
+}
+
+.btn {
+    background-color: transparent;
+    color: var(--text-dark);
+    padding: 16px 40px;
+    border: 1px solid var(--gold);
+    border-radius: 40px; 
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.4s ease;
+    background: linear-gradient(to right, transparent 50%, #fcf5e3 50%);
+    background-size: 200% 100%;
+    background-position: left bottom;
+}
+
+.btn:hover {
+    background-position: right bottom;
+    border-color: var(--gold-dark);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+}
+
+/* --- Desktop Scaling --- */
 @media (min-width: 768px) {
-    .couple-names { font-size: 4rem; line-height: 1.1; }
-    .heart-container { width: 200px; height: 177px; }
-    .hidden-content .value { font-size: 2.8rem; }
-    .hidden-content .label { font-size: 0.6rem; }
+    .couple-names { font-size: 6rem; }
+    .couple-names .ampersand { font-size: 6rem; }
+    .hidden-content .value { font-size: 3rem; }
+    .hidden-content .label { font-size: 0.75rem; margin-top: -20px;}
     .hearts-row { gap: 30px; }
-    
-    /* Recalculate clip-path for larger size if needed, but scaling works better */
-    .heart-container {
-        clip-path: path("M100 167.7 C100 167.7, 200 113.8, 200 63.8 C200 20.8, 156.9 -7.7, 121.5 13.8 C100 28.5, 100 28.5, 100 28.5 C100 28.5, 100 28.5, 78.5 13.8 C43.1 -7.7, 0 20.8, 0 63.8 C0 113.8, 100 167.7, 100 167.7 Z");
-    }
+    .invite-text { font-size: 1rem; }
+    .surprise-message { font-size: 3.5rem; }
 }
-
-
-
 </style>
 
 <body>
 
-    <!-- Audio Player -->
     <audio id="bgMusic" loop>
         <source id="audioSource" src="" type="audio/mpeg">
     </audio>
 
     <button id="audioToggle" class="audio-btn" aria-label="Toggle Audio">
-        <svg id="audioIcon" viewBox="0 0 24 24" width="24" height="24">
+        <svg id="audioIcon" viewBox="0 0 24 24" width="22" height="22">
             <path fill="currentColor"
                 d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
         </svg>
     </button>
 
+    <!-- Global Persistent Scroll Indicator -->
+    <div id="globalScrollPrompt">
+        <p>Scroll down</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </div>
 
-    <!-- Section 1: Theater Curtain Video Reveal -->
-    <section id="theaterSection" class="theater-section">
-        <div class="video-container">
-            <video id="curtainVideo" playsinline muted preload="auto">
-                <source id="videoSource" src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+    <!-- Content seamlessly split into screens within the snap container -->
+    <div class="content-container" id="contentContainer">
+        
+        <!-- Screen 1: Theater/Video -->
+        <section id="theaterSection" class="screen theater-section">
+            <div class="video-container">
+                <video id="curtainVideo" playsinline muted preload="auto">
+                    <source id="videoSource" src="" type="video/mp4">
+                </video>
 
-            <!-- Interaction Overlay -->
-            <div id="videoOverlay" class="curtain-content">
-                <div class="tap-to-open">
-                    <span class="pulse-icon">👆</span>
-                    <p>TAP TO OPEN</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 2: Couple Reveal & Scratch-off -->
-    <section id="revealSection" class="reveal-section">
-        <div class="reveal-inner">
-            <p class="invite-text">YOU ARE CORDIALLY INVITED TO CELEBRATE THE WEDDING OF</p>
-            <h1 id="coupleNamesDisplay" class="couple-names">Loading...</h1>
-
-            <div class="scratch-container">
-                <p class="scratch-instruction">Scratch to discover the date</p>
-
-                <div class="hearts-row">
-                    <!-- Day Heart -->
-                    <div class="heart-item">
-                        <div class="heart-container" id="heartContainer1">
-                            <div class="hidden-content">
-                                <span class="label">DAY</span>
-                                <span id="weddingDay" class="value">--</span>
-                            </div>
-                            <canvas id="scratchCanvas1" class="scratch-canvas"></canvas>
+                <div id="videoOverlay" class="curtain-content">
+                    <div class="tap-to-open">
+                        <div class="tap-circle">
+                            <!-- New Aesthetic Hand Pointer SVG -->
+                            <svg class="tap-icon" viewBox="0 0 24 24">
+                                <path d="M10 10.5V5a2 2 0 1 1 4 0v6"/>
+                                <path d="M14 10.5V9a2 2 0 1 1 4 0v3"/>
+                                <path d="M18 12v-1a2 2 0 1 1 4 0v5.5a7.5 7.5 0 0 1-15 0V9a2 2 0 1 1 4 0v1.5"/>
+                            </svg>
                         </div>
-                    </div>
-
-                    <!-- Month Heart -->
-                    <div class="heart-item">
-                        <div class="heart-container" id="heartContainer2">
-                            <div class="hidden-content">
-                                <span class="label">MONTH</span>
-                                <span id="weddingMonth" class="value">--</span>
-                            </div>
-                            <canvas id="scratchCanvas2" class="scratch-canvas"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Year Heart -->
-                    <div class="heart-item">
-                        <div class="heart-container" id="heartContainer3">
-                            <div class="hidden-content">
-                                <span class="label">YEAR</span>
-                                <span id="weddingYear" class="value">--</span>
-                            </div>
-                            <canvas id="scratchCanvas3" class="scratch-canvas"></canvas>
-                        </div>
+                        <p class="tap-text">Tap to continue</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="calendar-btn-container" id="calendarBtnContainer">
+        <!-- Screen 2: Intro -->
+        <section id="introScreen" class="screen">
+            <div class="monogram fade-up">P <span class="amp">&</span> P</div>
+            <p class="invite-text fade-up delay-1">
+                With hearts full of love,<br>
+                we invite you to save our special date.
+            </p>
+            <h1 id="coupleNamesDisplay" class="couple-names fade-up delay-2">Loading...</h1>
+        </section>
+
+        <!-- Screen 3: Scratch Reveal -->
+        <section id="scratchScreen" class="screen">
+            <div class="scratch-container" id="mainScratchContainer">
+                <span class="we-get-wed fade-up">WE GET WED</span>
+                <span class="scratch-instruction fade-up delay-1">Scratch to reveal</span>
+
+                <div class="hearts-row fade-up delay-2" id="heartsRow">
+                    <div class="heart-container" id="heartContainer1">
+                        <div class="hidden-content">
+                            <span class="label">DAY</span>
+                            <span id="weddingDay" class="value">--</span>
+                        </div>
+                        <canvas id="scratchCanvas1" class="scratch-canvas"></canvas>
+                    </div>
+
+                    <div class="heart-container" id="heartContainer2">
+                        <div class="hidden-content">
+                            <span class="label">MONTH</span>
+                            <span id="weddingMonth" class="value">--</span>
+                        </div>
+                        <canvas id="scratchCanvas2" class="scratch-canvas"></canvas>
+                    </div>
+
+                    <div class="heart-container" id="heartContainer3">
+                        <div class="hidden-content">
+                            <span class="label">YEAR</span>
+                            <span id="weddingYear" class="value">--</span>
+                        </div>
+                        <canvas id="scratchCanvas3" class="scratch-canvas"></canvas>
+                    </div>
+                </div>
+                
+                <!-- The Magical Surprise Element -->
+                <div id="surpriseMessage" class="surprise-message">
+                    Let the countdown begin...
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 4: Outro -->
+        <section id="outroScreen" class="screen">
+            <div class="bottom-message">
+                <p class="fade-up">We can't wait to celebrate with you</p>
+                <div class="with-love fade-up delay-1">With love,</div>
+                <div class="sign-off-names fade-up delay-2">Prachi & Prakash</div>
+            </div>
+
+            <!-- Changed to trigger via fade-up naturally on scroll -->
+            <div class="calendar-btn-container fade-up delay-3" id="calendarBtnContainer">
                 <a id="calendarLink" href="#" target="_blank" class="btn">
-                    Add to Calendar
+                    Mark your calendars
                 </a>
             </div>
+        </section>
 
-            <div class="footer-note">
-                <p>WE WOULD LIKE TO INVITE YOU TO CELEBRATE WITH US THE MOST SPECIAL DAY OF OUR LIVES.</p>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    // 1. Fetch site data first
-    fetch('site.json')
-        .then(response => response.json())
-        .then(data => {
-            injectSiteData(data);
+            const siteData = {
+                "pageTitle": "Save The Date | Prachi & Prakash",
+                "audioSrc": "https://pub-1953a6673e864f3488c645252f75de98.r2.dev/common-assets/ishq-hai-official-music-video-mismatched-season-3-a-netflix-series_5tXt3KoB.mp3",
+                "videoSrc": "https://pub-1953a6673e864f3488c645252f75de98.r2.dev/common-assets/Video.mp4",
+                "coupleNames": "Prachi & Prakash",
+                "weddingDate": { "day": "01", "month": "05", "year": "2026" },
+                "calendar": {
+                    "text": "Wedding of Prachi & Prakash",
+                    "dates": "20260501/20260502",
+                    "details": "We can't wait to celebrate our special day with you!",
+                    "location": "To be announced"
+                },
+                "favicon": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>"
+            };
+
+            injectSiteData(siteData);
             initApp();
-        })
-        .catch(err => {
-            console.error('Error loading site data:', err);
-            // Fallback initialization if JSON fails
-            initApp();
-        });
 
-    function injectSiteData(data) {
-        // Update Page Title
-        if (data.pageTitle) document.title = data.pageTitle;
+            function injectSiteData(data) {
+                if (data.pageTitle) document.title = data.pageTitle;
+                const favicon = document.getElementById('favicon');
+                if (favicon && data.favicon) favicon.href = data.favicon;
 
-        // Update Favicon
-        const favicon = document.getElementById('favicon');
-        if (favicon && data.favicon) {
-            favicon.href = data.favicon;
-        }
+                const audioSource = document.getElementById('audioSource');
+                const videoSource = document.getElementById('videoSource');
+                const bgMusic = document.getElementById('bgMusic');
+                const curtainVideo = document.getElementById('curtainVideo');
 
-        // Update Media Sources
-        const audioSource = document.getElementById('audioSource');
-        const videoSource = document.getElementById('videoSource');
-        const bgMusic = document.getElementById('bgMusic');
-        const curtainVideo = document.getElementById('curtainVideo');
+                if (audioSource && data.audioSrc) { audioSource.src = data.audioSrc; bgMusic.load(); }
+                if (videoSource && data.videoSrc) { videoSource.src = data.videoSrc; curtainVideo.load(); }
 
-        if (audioSource && data.audioSrc) {
-            audioSource.src = data.audioSrc;
-            bgMusic.load();
-        }
-        if (videoSource && data.videoSrc) {
-            videoSource.src = data.videoSrc;
-            curtainVideo.load();
-        }
+                const namesDisplay = document.getElementById('coupleNamesDisplay');
+                if (namesDisplay && data.coupleNames) {
+                    namesDisplay.innerHTML = data.coupleNames.replace(' & ', ' <span class="ampersand">&</span> ');
+                }
 
-        // Update Couple Names (Stacked)
-        const namesDisplay = document.getElementById('coupleNamesDisplay');
-        if (namesDisplay && data.coupleNames) {
-            const formattedNames = data.coupleNames.replace(' & ', '<br><span class="ampersand">&</span><br>');
-            namesDisplay.innerHTML = formattedNames;
-        }
+                if (data.weddingDate) {
+                    document.getElementById('weddingDay').textContent = data.weddingDate.day;
+                    document.getElementById('weddingMonth').textContent = data.weddingDate.month;
+                    document.getElementById('weddingYear').textContent = data.weddingDate.year;
+                }
 
-        // Update Wedding Date
-        if (data.weddingDate) {
-            const dayEl = document.getElementById('weddingDay');
-            const monthEl = document.getElementById('weddingMonth');
-            const yearEl = document.getElementById('weddingYear');
-
-            if (dayEl) dayEl.textContent = data.weddingDate.day;
-            if (monthEl) monthEl.textContent = data.weddingDate.month;
-            if (yearEl) yearEl.textContent = data.weddingDate.year;
-        }
-
-        // Update Calendar Link
-        const calendarLink = document.getElementById('calendarLink');
-        if (calendarLink && data.calendar) {
-            const baseUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE";
-            const url = `${baseUrl}&text=${encodeURIComponent(data.calendar.text)}&dates=${data.calendar.dates}&details=${encodeURIComponent(data.calendar.details)}&location=${encodeURIComponent(data.calendar.location)}`;
-            calendarLink.href = url;
-        }
-    }
-
-    function initApp() {
-        const theaterSection = document.getElementById('theaterSection');
-        const curtainVideo = document.getElementById('curtainVideo');
-        const bgMusic = document.getElementById('bgMusic');
-        const audioToggle = document.getElementById('audioToggle');
-        const audioIcon = document.getElementById('audioIcon');
-        let isMusicPlaying = false;
-
-        // --- Audio Logic ---
-        function toggleAudio() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                audioIcon.innerHTML = '<path fill="currentColor" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM4 9v6h4l5 5V4L8 9H4z"/>';
-            } else {
-                bgMusic.play().catch(e => console.log("Audio play blocked:", e));
-                audioIcon.innerHTML = '<path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+                const calendarLink = document.getElementById('calendarLink');
+                if (calendarLink && data.calendar) {
+                    const baseUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE";
+                    calendarLink.href = `${baseUrl}&text=${encodeURIComponent(data.calendar.text)}&dates=${data.calendar.dates}&details=${encodeURIComponent(data.calendar.details)}&location=${encodeURIComponent(data.calendar.location)}`;
+                }
             }
-            isMusicPlaying = !isMusicPlaying;
-        }
 
-        audioToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleAudio();
-        });
-
-        // --- Tab Switch / Focus Audio Logic ---
-        function handleVisibilityChange() {
-            if (document.hidden) {
-                bgMusic.pause();
-            } else if (isMusicPlaying) {
-                bgMusic.play().catch(e => console.log("Audio resume blocked:", e));
-            }
-        }
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        window.addEventListener('blur', () => bgMusic.pause());
-        window.addEventListener('focus', () => {
-            if (isMusicPlaying) bgMusic.play().catch(e => console.log("Audio focus resume blocked:", e));
-        });
-        window.addEventListener('beforeunload', () => bgMusic.pause());
-
-        // --- Video Curtain Logic ---
-        theaterSection.addEventListener('click', () => {
-            if (!theaterSection.classList.contains('playing')) {
-                theaterSection.classList.add('playing');
+            function initApp() {
+                const theaterSection = document.getElementById('theaterSection');
+                const curtainVideo = document.getElementById('curtainVideo');
+                const bgMusic = document.getElementById('bgMusic');
+                const audioToggle = document.getElementById('audioToggle');
+                const audioIcon = document.getElementById('audioIcon');
                 
-                // Play video and music together
-                curtainVideo.play();
-                if (!isMusicPlaying) {
-                    toggleAudio();
+                let isMusicPlaying = false;
+                let scrollingUnlocked = false; // Is global scrolling initially unlocked?
+                let isScratchUnlocked = false; // Have hearts been completely scratched?
+                let scratchHeartsInitialized = false;
+                let currentScreenId = 'theaterSection';
+
+                // --- Global Scroll Prompt Logic ---
+                const scrollPrompt = document.getElementById('globalScrollPrompt');
+                
+                function updateScrollPromptVisibility() {
+                    if (!scrollingUnlocked) return; // Keep fully hidden if video isn't done
+                    
+                    if (currentScreenId === 'outroScreen') {
+                        // Reached the end, hide arrow
+                        scrollPrompt.classList.remove('visible');
+                    } else if (currentScreenId === 'scratchScreen' && !isScratchUnlocked) {
+                        // Locked at scratch screen, hide arrow so they know they have to interact
+                        scrollPrompt.classList.remove('visible');
+                    } else {
+                        // Otherwise, arrow is active to guide them
+                        scrollPrompt.classList.add('visible');
+                    }
+                    
+                    // Color Adaptability: White on the dark video, standard color elsewhere
+                    if (currentScreenId === 'theaterSection') {
+                        scrollPrompt.classList.add('light-text');
+                    } else {
+                        scrollPrompt.classList.remove('light-text');
+                    }
+                }
+
+                // Intersection Observer for scroll animations and tracking screen index
+                const observerOptions = { threshold: 0.6 }; // Triggers when screen is mostly locked in view
+                const scrollObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Run Fade-ups for this screen
+                            const fadeElements = entry.target.querySelectorAll('.fade-up');
+                            fadeElements.forEach(el => el.classList.add('visible'));
+
+                            // Track current screen
+                            currentScreenId = entry.target.id;
+                            updateScrollPromptVisibility();
+
+                            // Lock scroll forcibly if arriving at scratch screen before scratching
+                            if (currentScreenId === 'scratchScreen' && !isScratchUnlocked) {
+                                // Short timeout allows the snap scroll animation to finish beautifully before locking
+                                setTimeout(() => {
+                                    if (currentScreenId === 'scratchScreen' && !isScratchUnlocked) {
+                                        document.getElementById('contentContainer').style.overflowY = 'hidden';
+                                        updateScrollPromptVisibility();
+                                    }
+                                }, 400); 
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                // Setup Audio
+                function toggleAudio() {
+                    if (isMusicPlaying) {
+                        bgMusic.pause();
+                        audioIcon.innerHTML = '<path fill="currentColor" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM4 9v6h4l5 5V4L8 9H4z"/>';
+                    } else {
+                        bgMusic.play().catch(e => console.log("Audio play blocked:", e));
+                        audioIcon.innerHTML = '<path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+                    }
+                    isMusicPlaying = !isMusicPlaying;
+                }
+
+                audioToggle.addEventListener('click', (e) => { e.stopPropagation(); toggleAudio(); });
+
+                // Start Video & Reveal UI
+                theaterSection.addEventListener('click', () => {
+                    if (!theaterSection.classList.contains('playing')) {
+                        theaterSection.classList.add('playing');
+                        curtainVideo.play();
+                        if (!isMusicPlaying) toggleAudio();
+                    }
+                });
+
+                curtainVideo.addEventListener('timeupdate', () => {
+                    if (!scrollingUnlocked && curtainVideo.currentTime >= 3.5) {
+                        scrollingUnlocked = true;
+                        
+                        // Unlock scrolling on the container so they can begin journey
+                        document.body.classList.add('content-ready');
+                        
+                        updateScrollPromptVisibility();
+                        
+                        // Start observing elements for scroll fade-ins
+                        document.querySelectorAll('.screen').forEach(el => scrollObserver.observe(el));
+
+                        setTimeout(() => {
+                            if (!scratchHeartsInitialized) {
+                                initScratchHearts();
+                                scratchHeartsInitialized = true;
+                            }
+                        }, 200);
+                    }
+                });
+
+                // --- Luxury Foil Scratch-off with Haptic Vibration ---
+                class ScratchHeart {
+                    constructor(canvasId, containerId, onReveal) {
+                        this.canvas = document.getElementById(canvasId);
+                        this.ctx = this.canvas.getContext('2d');
+                        this.container = document.getElementById(containerId);
+                        this.onReveal = onReveal;
+                        this.isDrawing = false;
+                        this.revealed = false;
+                        this.lastVibe = 0; // For throttling vibration
+                        this.init();
+                    }
+
+                    init() {
+                        const rect = this.container.getBoundingClientRect();
+                        this.width = rect.width;
+                        this.height = rect.height;
+                        const dpr = window.devicePixelRatio || 1;
+                        this.canvas.width = this.width * dpr;
+                        this.canvas.height = this.height * dpr;
+                        this.ctx.scale(dpr, dpr);
+
+                        this.createLuxuriousFoilTexture();
+                        
+                        this.canvas.addEventListener('mousedown', (e) => { this.isDrawing = true; this.scratch(e); });
+                        this.canvas.addEventListener('touchstart', (e) => { this.isDrawing = true; this.scratch(e); }, { passive: false });
+                        window.addEventListener('mouseup', () => { this.isDrawing = false; });
+                        window.addEventListener('touchend', () => { this.isDrawing = false; });
+                        this.canvas.addEventListener('mousemove', (e) => this.scratch(e));
+                        this.canvas.addEventListener('touchmove', (e) => this.scratch(e), { passive: false });
+                    }
+
+                    createLuxuriousFoilTexture() {
+                        const gradient = this.ctx.createLinearGradient(0, 0, this.width, this.height);
+                        gradient.addColorStop(0, '#c9828a'); 
+                        gradient.addColorStop(0.5, '#e0a9af'); 
+                        gradient.addColorStop(1, '#a86a71'); 
+                        this.ctx.fillStyle = gradient;
+                        this.ctx.fillRect(0, 0, this.width, this.height);
+
+                        for (let i = 0; i < 2000; i++) {
+                            const x = Math.random() * this.width;
+                            const y = Math.random() * this.height;
+                            const size = Math.random() * 1.2;
+                            this.ctx.fillStyle = Math.random() > 0.5 ? 'rgba(255,255,255,0.4)' : 'rgba(212, 175, 55, 0.4)';
+                            this.ctx.beginPath();
+                            this.ctx.arc(x, y, size, 0, Math.PI * 2);
+                            this.ctx.fill();
+                        }
+                    }
+
+                    getMousePos(e) {
+                        const rect = this.canvas.getBoundingClientRect();
+                        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                        return { x: clientX - rect.left, y: clientY - rect.top };
+                    }
+
+                    scratch(e) {
+                        if (!this.isDrawing || this.revealed) return;
+                        if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
+
+                        // --- HAPTIC FEEDBACK (Vibration) ---
+                        // 15ms for stronger tactile feedback while actively scratching.
+                        if (navigator.vibrate) {
+                            const now = Date.now();
+                            if (now - this.lastVibe > 80) { // Throttled to 80ms
+                                navigator.vibrate(15); 
+                                this.lastVibe = now;
+                            }
+                        }
+
+                        const pos = this.getMousePos(e);
+                        this.ctx.globalCompositeOperation = 'destination-out';
+                        this.ctx.beginPath();
+                        this.ctx.arc(pos.x, pos.y, this.width * 0.18, 0, Math.PI * 2);
+                        this.ctx.fill();
+
+                        if (Math.random() > 0.3) this.checkProgress();
+                    }
+
+                    checkProgress() {
+                        if (this.revealed) return;
+                        const sampleRate = 32; 
+                        const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+                        const pixels = imageData.data;
+                        let transparentPixels = 0;
+
+                        for (let i = 3; i < pixels.length; i += sampleRate) {
+                            if (pixels[i] < 128) transparentPixels++;
+                        }
+
+                        const totalPixels = pixels.length / sampleRate;
+                        if ((transparentPixels / totalPixels) * 100 > 45) {
+                            this.revealAll();
+                        }
+                    }
+
+                    revealAll() {
+                        this.revealed = true;
+                        this.canvas.style.opacity = '0';
+                        setTimeout(() => {
+                            this.canvas.style.display = 'none';
+                            this.onReveal();
+                        }, 1000);
+                    }
+                }
+
+                function initScratchHearts() {
+                    let revealedHeartsCount = 0;
+                    const totalHearts = 3;
+
+                    function checkAllRevealed() {
+                        revealedHeartsCount++;
+                        if (revealedHeartsCount === totalHearts) {
+                            // The user has completed the scratch-off requirement!
+                            isScratchUnlocked = true;
+                            
+                            // 1. Immediately restore scrolling back and forth
+                            document.getElementById('contentContainer').style.overflowY = 'auto';
+                            updateScrollPromptVisibility();
+
+                            // 2. Hide "Scratch to reveal" instructions
+                            const mainContainer = document.getElementById('mainScratchContainer');
+                            if (mainContainer) mainContainer.classList.add('unlocked');
+
+                            // 3. Begin heartbeat animation for the revealed hearts
+                            const heartsRow = document.getElementById('heartsRow');
+                            if (heartsRow) heartsRow.classList.add('unlocked');
+
+                            // 4. Reveal the Magical Surprise text beneath
+                            const surpriseMsg = document.getElementById('surpriseMessage');
+                            if (surpriseMsg) {
+                                setTimeout(() => { surpriseMsg.classList.add('revealed'); }, 500);
+                            }
+
+                            // 5. Fire Confetti
+                            const colors = ['#d4af37', '#c9828a', '#ffffff', '#e8ded5'];
+                            const end = Date.now() + 3000;
+                            (function frame() {
+                                confetti({ particleCount: 4, angle: 60, spread: 80, origin: { x: 0, y: 0.8 }, colors: colors, zIndex: 1000 });
+                                confetti({ particleCount: 4, angle: 120, spread: 80, origin: { x: 1, y: 0.8 }, colors: colors, zIndex: 1000 });
+                                if (Date.now() < end) requestAnimationFrame(frame);
+                            }());
+                        }
+                    }
+
+                    new ScratchHeart('scratchCanvas1', 'heartContainer1', checkAllRevealed);
+                    new ScratchHeart('scratchCanvas2', 'heartContainer2', checkAllRevealed);
+                    new ScratchHeart('scratchCanvas3', 'heartContainer3', checkAllRevealed);
                 }
             }
         });
-
-        // Track if scrolling has been unlocked
-        let scrollingUnlocked = false;
-
-        // Handle mid-video reveal to unlock scrolling
-        curtainVideo.addEventListener('timeupdate', () => {
-            if (!scrollingUnlocked && curtainVideo.currentTime >= 3.5) {
-                scrollingUnlocked = true;
-                document.body.classList.add('content-ready');
-            }
-        });
-
-        // --- Scratch-off Logic ---
-        class ScratchHeart {
-            constructor(canvasId, containerId, onReveal) {
-                this.canvas = document.getElementById(canvasId);
-                this.ctx = this.canvas.getContext('2d');
-                this.container = document.getElementById(containerId);
-                this.onReveal = onReveal;
-                this.isDrawing = false;
-                this.revealed = false;
-
-                this.width = 160;
-                this.height = 142;
-                this.canvas.width = this.width;
-                this.canvas.height = this.height;
-
-                this.init();
-            }
-
-            init() {
-                this.createScratchTexture();
-                this.canvas.addEventListener('mousedown', (e) => { this.isDrawing = true; this.scratch(e); });
-                this.canvas.addEventListener('touchstart', (e) => { this.isDrawing = true; this.scratch(e); }, { passive: false });
-                window.addEventListener('mouseup', () => { this.isDrawing = false; });
-                window.addEventListener('touchend', () => { this.isDrawing = false; });
-                this.canvas.addEventListener('mousemove', (e) => this.scratch(e));
-                this.canvas.addEventListener('touchmove', (e) => this.scratch(e), { passive: false });
-            }
-
-            createScratchTexture() {
-                // Get computed accent colors
-                const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-                const accentDarkColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-dark').trim();
-                const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim();
-
-                this.ctx.fillStyle = accentColor;
-                this.ctx.fillRect(0, 0, this.width, this.height);
-
-                for (let i = 0; i < 2000; i++) {
-                    const x = Math.random() * this.width;
-                    const y = Math.random() * this.height;
-                    const size = Math.random() * 2 + 1;
-                    const colors = [accentColor, accentDarkColor, borderColor];
-                    this.ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-                    this.ctx.beginPath();
-                    this.ctx.arc(x, y, size, 0, Math.PI * 2);
-                    this.ctx.fill();
-                }
-            }
-
-            getMousePos(e) {
-                const rect = this.canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                
-                const scaleX = this.canvas.width / rect.width;
-                const scaleY = this.canvas.height / rect.height;
-
-                return {
-                    x: (clientX - rect.left) * scaleX,
-                    y: (clientY - rect.top) * scaleY
-                };
-            }
-
-            scratch(e) {
-                if (!this.isDrawing || this.revealed) return;
-
-                if (e.cancelable && e.type.startsWith('touch')) {
-                    e.preventDefault();
-                }
-
-                const pos = this.getMousePos(e);
-                
-                this.ctx.globalCompositeOperation = 'destination-out';
-                this.ctx.beginPath();
-                this.ctx.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
-                this.ctx.fill();
-
-                if (Math.random() > 0.4) this.checkProgress();
-            }
-
-            checkProgress() {
-                if (this.revealed) return;
-
-                const imageData = this.ctx.getImageData(0, 0, this.width, this.height);
-                const pixels = imageData.data;
-                let transparentPixels = 0;
-                const sampleRate = 16;
-
-                for (let i = 3; i < pixels.length; i += sampleRate) {
-                    if (pixels[i] < 128) transparentPixels++;
-                }
-
-                const totalPixels = pixels.length / sampleRate;
-                const percent = (transparentPixels / totalPixels) * 100;
-
-                if (percent > 45) {
-                    this.revealAll();
-                }
-            }
-
-            revealAll() {
-                this.revealed = true;
-                this.canvas.style.opacity = '0';
-                setTimeout(() => {
-                    this.canvas.style.display = 'none';
-                    this.onReveal();
-                }, 800);
-            }
-        }
-
-        let revealedHeartsCount = 0;
-        const totalHearts = 3;
-
-        function checkAllRevealed() {
-            revealedHeartsCount++;
-            if (revealedHeartsCount === totalHearts) {
-                // Show calendar button
-                const calendarBtn = document.getElementById('calendarBtnContainer');
-                if (calendarBtn) {
-                    setTimeout(() => {
-                        calendarBtn.classList.add('visible');
-                    }, 1000);
-                }
-
-                // Final celebratory sprinkle shower (subtle)
-                const colors = ['#b11226', '#caa46a', '#f5e6d3', '#ffffff'];
-                const duration = 2000;
-                const end = Date.now() + duration;
-
-                (function frame() {
-                    confetti({
-                        particleCount: 3,
-                        angle: 60,
-                        spread: 80,
-                        origin: { x: 0, y: 0.8 },
-                        colors: colors
-                    });
-                    confetti({
-                        particleCount: 3,
-                        angle: 120,
-                        spread: 80,
-                        origin: { x: 1, y: 0.8 },
-                        colors: colors
-                    });
-                    confetti({
-                        particleCount: 2,
-                        gravity: 0.4,
-                        scalar: 1,
-                        origin: { y: -0.1 },
-                        colors: colors
-                    });
-
-                    if (Date.now() < end) requestAnimationFrame(frame);
-                }());
-            }
-        }
-
-        // Pass the callback to each heart
-        new ScratchHeart('scratchCanvas1', 'heartContainer1', checkAllRevealed);
-        new ScratchHeart('scratchCanvas2', 'heartContainer2', checkAllRevealed);
-        new ScratchHeart('scratchCanvas3', 'heartContainer3', checkAllRevealed);
-    }
-});
-
     </script>
 </body>
 
